@@ -1,0 +1,16 @@
+filepath: /Users/takabak/work/espaloma_rna/validation/tetramer/aaaa/rna.ol3/00_setup
+outpath: .
+prmtopfile: input.prmtop
+inpcrdfile: input.inpcrd
+timestep: 4.0 * femtoseconds    # https://github.com/openmm/openmm/issues/2520
+hmass: 1.5 * amu
+temperature: 275 * kelvin
+pressure: 1 * atm
+nonbonded_cutoff: 9 * angstroms
+nsteps_min: 100
+nsteps_eq: 100                  # 50 ps = 50 * 1000 fs = 500 000 fs / 4 fs * 125 000 steps
+                                # 3 stage equilibration: heating -> nvt -> npt (all stage: steps = nsteps_eq)
+nsteps_prod: 1000               # 100 us = 100 * 1000 ns = 100 * 1000 * 1000 ps = 10 * 1000 * 1000 * 1000 fs = 10 000 000 000 fs / 4 fs = 2500 000 000 steps
+checkpoint_frequency: 10        # frequency to save checkpoint file
+logging_frequency: 10           # frequency to save logging
+netcdf_frequency: 10            # frequency to save trajectory data
