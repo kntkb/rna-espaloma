@@ -1,0 +1,11 @@
+**_obsolete**
+**.ipynb_checkpoints**
+**.nc**
+**.pt**
+**.chk**
+**.log**
+
+
+#
+train/mydata
+train/plot_loss.png
