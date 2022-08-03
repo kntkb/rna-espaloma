@@ -12,12 +12,14 @@ import yaml
 from openmm.app import *
 from openmm import *
 from openmm.unit import *
+#from simtk.unit import Quantity
 from openff.toolkit.utils import utils as offutils
-from openff.units.openmm import to_openmm
+#from openff.units.openmm import to_openmm
 from sys import stdout
 from openmm.app import PDBFile
 from pdbfixer import PDBFixer
 from mdtraj.reporters import NetCDFReporter
+
 
 
 
@@ -53,19 +55,17 @@ def run(**kwargs):
         'timestep': 2 * femtoseconds,
         'hmass': 1 * amu,
         'temperature': 300 * kelvin,
-        'pressure': 1 * bar,
+        'pressure': 1 * atmosphere,
         'nonbonded_cutoff': 10 * angstrom,
     }
 
-
     # any better way to convert strings into openmm quantity?
     for k, v in kwargs.items():
-        if k in [ "timestep", "temperature", "pressure", "nonbonded_cutoff" ]:
+        if k in [ "timestep", "temperature", "pressure", "nonbonded_cutoff", "hmass" ]:
             converted = offutils.string_to_quantity(v)
-            kwargs.update({ k: to_openmm(converted) })
-        if k in [ "hmass" ]:
-            m = v.split('*')[0].strip()
-            kwargs.update({ k: float(m) * amu })
+            #print(type(converted), converted)
+            #kwargs.update({ k: to_openmm(converted) })
+            kwargs.update({ k: converted })
     options = DEFAULT_OPTIONS.copy()
     options.update(**kwargs)
     #print(options)
@@ -77,6 +77,9 @@ def run(**kwargs):
     prmtop = AmberPrmtopFile(os.path.join(options["filepath"], options["prmtopfile"]))
     inpcrd = AmberInpcrdFile(os.path.join(options["filepath"], options["inpcrdfile"]))
     system = prmtop.createSystem(nonbondedMethod=PME, nonbondedCutoff=options["nonbonded_cutoff"], constraints=HBonds, rigidWater=True, hydrogenMass=options["hmass"])
+    #system = prmtop.createSystem(nonbondedMethod=PME, nonbondedCutoff=options["nonbonded_cutoff"], constraints=HBonds, rigidWater=True)
+    #system = prmtop.createSystem(nonbondedMethod=PME, nonbondedCutoff=10 * angstrom, constraints=HBonds, rigidWater=True)
+
 
     integrator = LangevinMiddleIntegrator(options["temperature"], 1/picosecond, options["timestep"])
     simulation = Simulation(prmtop.topology, system, integrator)

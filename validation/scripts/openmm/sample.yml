@@ -5,7 +5,7 @@ inpcrdfile: input.inpcrd
 timestep: 4.0 * femtoseconds    # https://github.com/openmm/openmm/issues/2520
 hmass: 1.5 * amu
 temperature: 275 * kelvin
-pressure: 1 * atm
+pressure: 1 * atomsphere
 nonbonded_cutoff: 9 * angstroms
 nsteps_min: 100
 nsteps_eq: 100                  # 50 ps = 50 * 1000 fs = 500 000 fs / 4 fs * 125 000 steps
