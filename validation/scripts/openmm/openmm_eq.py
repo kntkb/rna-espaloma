@@ -44,8 +44,8 @@ def run(**options):
     prmtopfile = options["prmtop"]
     inpcrdfile = options["inpcrd"]
     output_prefix = options["output_prefix"]
-    timestep = 2 * femtoseconds
-    hmass = 1 * amu
+    timestep = 4 * femtoseconds
+    hmass = 3.5 * amu
     temperature = 300 * kelvin
     pressure = 1 * atmosphere
     nonbonded_cutoff = 9 * angstrom

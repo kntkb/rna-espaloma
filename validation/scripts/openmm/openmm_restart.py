@@ -47,8 +47,8 @@ def run(**options):
     output_prefix = options["output_prefix"]
     restart_prefix = options["restart_prefix"]
     initialize_velocity = options["initialize_velocity"]
-    timestep = 2 * femtoseconds
-    hmass = 1 * amu
+    timestep = 4 * femtoseconds
+    hmass = 3.5 * amu
     temperature = 300 * kelvin
     pressure = 1 * atmosphere
     nonbonded_cutoff = 9 * angstrom
@@ -103,7 +103,7 @@ def run(**options):
 
     if initialize_velocity == "True":
         simulation.context.setVelocitiesToTemperature(temperature)     # initialize velocity
-        simulation.step(nsteps_prod)
+    simulation.step(nsteps_prod)
 
 
     """
